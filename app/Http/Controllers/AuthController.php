@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login()
     {
         return view('login');
     }
@@ -28,13 +28,15 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             if (Auth::user()->status != 'active') {
                 return redirect('login')->with('error', 'Your account is not active');
-                // Session::flash('message', 'Your account is not active');
-            } else {
-                // $request->session()->regenerate();
-                return redirect()->intended('/');
             }
-            // $request->session()->regenerate();
-            // return redirect()->intended('/');
+
+            $request->session()->regenerate();
+
+            if (Auth::user()->role_id == 1) {
+                return redirect('/dashboard');
+            } else {
+                return redirect('/');
+            }
         }
 
     }
