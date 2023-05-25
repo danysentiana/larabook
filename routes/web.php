@@ -17,12 +17,23 @@ use App\Http\Controllers\DashboardController;
 */
 
 // Auth routes
-Route::get('/login', [AuthController::class, 'login'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate')->middleware('guest');
-Route::get('/register', [AuthController::class, 'register'])->name('register')->middleware('guest');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware(['auth', 'admin']);
+// route group guest
+Route::middleware(['guest'])->group(function () {
+    Route::get('/register', [AuthController::class, 'register'])->name('register');
+    Route::get('/login', [AuthController::class, 'login'])->name('login');
+    Route::post('/login', [AuthController::class, 'authenticate']);
+    Route::post('/register', [AuthController::class, 'registration']);
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::middleware('auth')->group(function() {
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('admin');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+
+
 
 

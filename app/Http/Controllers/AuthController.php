@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -26,18 +26,51 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->status != 'active') {
-                return redirect('login')->with('error', 'Your account is not active');
+            $user = Auth::user();
+            if($user->status != 'active'){
+                Auth::logout();
+                return back()->with('error', 'Your account is inactive');
+                // return redirect()->route('login')->with('error', 'Your account is inactive');
             }
 
             $request->session()->regenerate();
 
-            if (Auth::user()->role_id == 1) {
-                return redirect('/dashboard');
+            if ($user->role_id == 1) {
+                return redirect()->route('dashboard');
             } else {
-                return redirect('/');
+                return redirect()->route('home');
             }
-        }
 
+        } else {
+            return back()->with('error', 'Your username or password is incorrect');
+        }
+    }
+
+    public function registerarion(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => ['required'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'confirmed']
+        ]);
+
+        $credentials['password'] = bcrypt($credentials['password']);
+
+        $user = User::create($credentials);
+
+        Auth::login($user);
+
+        return redirect()->route('home');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }
