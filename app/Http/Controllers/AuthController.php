@@ -46,21 +46,21 @@ class AuthController extends Controller
         }
     }
 
-    public function registerarion(Request $request)
+    public function registeration(Request $request)
     {
+        // dd($request->all());
         $credentials = $request->validate([
-            'username' => ['required'],
-            'email' => ['required', 'email'],
+            'username' => ['required', 'unique:users', 'alpha_dash'],
+            'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'confirmed']
         ]);
 
-        $credentials['password'] = bcrypt($credentials['password']);
+        // $credentials['password'] = bcrypt($credentials['password']);
+
 
         $user = User::create($credentials);
 
-        Auth::login($user);
-
-        return redirect()->route('home');
+        return redirect()->route('login');
     }
 
     public function logout(Request $request)

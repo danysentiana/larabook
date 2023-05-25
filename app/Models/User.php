@@ -42,4 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected $attributes = [
+        'role_id' => 2,
+        'status' => 'active',
+    ];
 }
