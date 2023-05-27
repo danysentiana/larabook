@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -55,12 +56,11 @@ class AuthController extends Controller
             'password' => ['required', 'confirmed']
         ]);
 
-        // $credentials['password'] = bcrypt($credentials['password']);
-
+        $credentials['password'] = Hash::make($credentials['password']);
 
         $user = User::create($credentials);
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with('success', 'Your account has been created successfully');
     }
 
     public function logout(Request $request)

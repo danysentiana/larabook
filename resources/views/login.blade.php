@@ -35,16 +35,12 @@
 
   <body class="m-0 font-sans antialiased font-normal bg-gradient-to-tl from-blue-600 to-cyan-400 text-start text-base text-slate-500 h-screen">
     {{-- flash msg --}}
-    {{-- @if (session()->has('success'))
+    @if (session('success'))
 
-    <div class="fixed inset-x-0 top-0 z-50 flex items-center justify-center px-4 py-2 space-x-2 text-white bg-green-500">
-        <span class="text-lg font-semibold tracking-wide uppercase">Success</span>
-        <span class="text-lg font-semibold">{{ session('success') }}</span>
-    </div> --}}
-
-    {{-- @endif --}}
-
-
+    <div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+        <span class="font-medium">Info alert!</span> {{ session('success') }}
+    </div>
+    @endif
 
     @if (session('error'))
 
