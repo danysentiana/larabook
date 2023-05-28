@@ -13,8 +13,8 @@
             <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">arabook</span>
          </a>
          <hr class="border-b border-dashed border-2 border-gray-200">
-       <ul class="space-y-2 font-medium mt-3">
-          <li class="{{  Request::is('admin/dashboard') ? 'bg-white shadow-lg rounded-md text-black p-2' : 'text-gray-900'  }} ">
+       <ul class="space-y-2 font-semibold mt-3">
+          <li class="{{  Request::is('admin/dashboard') ? 'bg-white shadow-lg rounded-md text-black p-2' : 'text-gray-900 hover:p-2 hover:shadow-lg hover:rounded-md duration-300' }}">
              <a href="/admin/dashboard" class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 <svg aria-hidden="true" class="w-6 h-6 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="{{ Request::is('admin/dashboard') ? '#dc166d' : '#6B7280' }}" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
                 <span class="ml-3">Dashboard</span>
@@ -22,18 +22,18 @@
           </li>
           <li>
             <button type="button" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-books" data-collapse-toggle="dropdown-books">
-                <svg aria-hidden="true" class="pl-0.5 flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="#6B7280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
-                  <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Books</span>
+                <svg aria-hidden="true" class=" pl-1 flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" fill="{{ Request::is('admin/category') || Request::is('admin/book-list') || Request::is('admin/rent-log') ? '#dc166d' : '#6B7280' }}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M96 0C43 0 0 43 0 96V416c0 53 43 96 96 96H384h32c17.7 0 32-14.3 32-32s-14.3-32-32-32V384c17.7 0 32-14.3 32-32V32c0-17.7-14.3-32-32-32H384 96zm0 384H352v64H96c-17.7 0-32-14.3-32-32s14.3-32 32-32zm32-240c0-8.8 7.2-16 16-16H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16zm16 48H336c8.8 0 16 7.2 16 16s-7.2 16-16 16H144c-8.8 0-16-7.2-16-16s7.2-16 16-16z"/></svg>
+                  <span class="flex-1 ml-4 text-left whitespace-nowrap" sidebar-toggle-item>Books</span>
                   <svg sidebar-toggle-item class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
             </button>
             <ul id="dropdown-books" class="{{ Request::is('admin/category') || Request::is('admin/book-list') || Request::is('admin/rent-log')  ? '' : 'hidden' }}  py-2 space-y-2">
-                  <li>
+                  <li class="{{  Request::is('admin/category') ? 'bg-white shadow-lg rounded-md text-black p-2' : 'text-gray-900 hover:p-2 hover:shadow-lg hover:rounded-md duration-300' }}">
                      <a href="/admin/category" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Book Category</a>
                   </li>
-                  <li>
+                  <li class="{{  Request::is('admin/book-list') ? 'bg-white shadow-lg rounded-md text-black p-2' : 'text-gray-900 hover:p-2 hover:shadow-lg hover:rounded-md duration-300' }}">
                      <a href="/admin/book-list" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Book Lists</a>
                   </li>
-                  <li>
+                  <li class="{{  Request::is('admin/rent-log') ? 'bg-white shadow-lg rounded-md text-black p-2' : 'text-gray-900 hover:p-2 hover:shadow-lg hover:rounded-md duration-300' }}">
                      <a href="/admin/rent-log" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">Rent Logs</a>
                   </li>
             </ul>
