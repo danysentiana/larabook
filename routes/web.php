@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\BookController;
+use App\Http\Controllers\RentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,8 +33,13 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function() {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('admin');
+    Route::get('/admin/category', [CategoryController::class, 'index'])->name('category')->middleware('admin');
+    Route::get('/admin/book-list', [BookController::class, 'index'])->name('book-list')->middleware('admin');
+    Route::get('/admin/rent-log', [RentController::class, 'index'])->name('rent-log')->middleware('admin');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
+
+// category routes
 
 
 

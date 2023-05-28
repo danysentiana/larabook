@@ -1,7 +1,6 @@
 import "./bootstrap";
-import "flowbite";
-// import css
 import "../css/app.css";
+import "flowbite";
 
 // import js
-import "../js/app.js";
+// import "../js/app.js";
