@@ -12,7 +12,7 @@
             <img src="{{ asset('img/favicon.png') }}" class="h-6 mr-1 sm:h-7" alt="Flowbite Logo" />
             <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">arabook</span>
          </a>
-         <hr class="border-b border-dashed border-2 border-gray-200">
+         <hr class="border-b border-2 border-gray-200">
        <ul class="space-y-2 font-semibold mt-3">
           <li class="{{  Request::is('admin/dashboard') ? 'bg-white shadow-lg rounded-md text-black p-2' : 'text-gray-900 hover:p-2 hover:shadow-lg hover:rounded-md duration-300' }}">
              <a href="/admin/dashboard" class="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">

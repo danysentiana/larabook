@@ -13,7 +13,6 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        // book categories
         $categories = [
             'Action and Adventure',
             'Classics',
@@ -36,9 +35,32 @@ class CategorySeeder extends Seeder
             'Self-Help',
             'True Crime',
         ];
-        foreach ($categories as $category) {
+        $slug = [
+            'action-and-adventure',
+            'classics',
+            'comic-book-or-graphic-novel',
+            'detective-and-mystery',
+            'fantasy',
+            'historical-fiction',
+            'horror',
+            'literary-fiction',
+            'romance',
+            'science-fiction',
+            'short-stories',
+            'suspense-and-thrillers',
+            'biographies-and-autobiographies',
+            'cookbooks',
+            'essays',
+            'history',
+            'memoir',
+            'poetry',
+            'self-help',
+            'true-crime',
+        ];
+        for ($i = 0; $i < count($categories); $i++) {
             Category::create([
-                'name' => $category,
+                'name' => $categories[$i],
+                'slug' => $slug[$i],
             ]);
         }
     }

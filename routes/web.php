@@ -33,7 +33,11 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function() {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('admin');
+    // category routes
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('category')->middleware('admin');
+    Route::post('/admin/category', [CategoryController::class, 'store'])->name('category.store')->middleware('admin');
+    // edit category
+    Route::put('/admin/category/{slug}/edit', [CategoryController::class, 'update'])->name('category.update')->middleware('admin');
     Route::get('/admin/book-list', [BookController::class, 'index'])->name('book-list')->middleware('admin');
     Route::get('/admin/rent-log', [RentController::class, 'index'])->name('rent-log')->middleware('admin');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
