@@ -36,10 +36,13 @@ Route::middleware('auth')->group(function() {
     // category routes
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('category')->middleware('admin');
     Route::post('/admin/category', [CategoryController::class, 'store'])->name('category.store')->middleware('admin');
-    // edit category
     Route::put('/admin/category/{slug}/edit', [CategoryController::class, 'update'])->name('category.update')->middleware('admin');
-    // delete category
     Route::delete('/admin/category/{slug}/delete', [CategoryController::class, 'destroy'])->name('category.destroy')->middleware('admin');
+    Route::get('/admin/category/deleted', [CategoryController::class, 'deleted'])->name('category.deleted')->middleware('admin');
+    Route::get('/admin/category/{slug}/restore', [CategoryController::class, 'restore'])->name('category.restore')->middleware('admin');
+    // permanently delete category
+    Route::delete('/admin/category/{slug}/permanently-delete', [CategoryController::class, 'permanentlyDelete'])->name('category.permanently-delete')->middleware('admin');
+
 
 
     Route::get('/admin/book-list', [BookController::class, 'index'])->name('book-list')->middleware('admin');
