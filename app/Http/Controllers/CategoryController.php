@@ -29,7 +29,6 @@ class CategoryController extends Controller
 
     public function update(Request $request, $slug)
     {
-        dd($request->all());
         $request->validate([
             'name' => 'required|unique:categories'
         ]);
@@ -40,6 +39,14 @@ class CategoryController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Category updated successfully');
+    }
+
+    public function destroy($slug)
+    {
+        $category = Category::where('slug', $slug)->first();
+        $category->delete();
+
+        return redirect()->back()->with('success', 'Category deleted successfully');
     }
 
 }
