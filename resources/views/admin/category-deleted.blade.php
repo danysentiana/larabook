@@ -131,11 +131,4 @@
  </div>
 @endsection
 
-{{-- <script type="text/javascript">
-// hide alert after 5 seconds
-setTimeout(function() {
-    $('#alert').fadeOut('fast');
-}, 5000); // <-- time in milliseconds
 
-
-</script> --}}

@@ -40,12 +40,10 @@ Route::middleware('auth')->group(function() {
     Route::delete('/admin/category/{slug}/delete', [CategoryController::class, 'destroy'])->name('category.destroy')->middleware('admin');
     Route::get('/admin/category/deleted', [CategoryController::class, 'deleted'])->name('category.deleted')->middleware('admin');
     Route::get('/admin/category/{slug}/restore', [CategoryController::class, 'restore'])->name('category.restore')->middleware('admin');
-    // permanently delete category
     Route::delete('/admin/category/{slug}/permanently-delete', [CategoryController::class, 'permanentlyDelete'])->name('category.permanently-delete')->middleware('admin');
-
-
-
+    // Book Routes
     Route::get('/admin/book-list', [BookController::class, 'index'])->name('book-list')->middleware('admin');
+    Route::post('/admin/book-list', [BookController::class, 'store'])->name('book-list.store')->middleware('admin');
     Route::get('/admin/rent-log', [RentController::class, 'index'])->name('rent-log')->middleware('admin');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

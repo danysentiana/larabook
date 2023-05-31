@@ -14,7 +14,7 @@ class Category extends Model
     use SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'name', 'slug'
     ];
 
     // slugable

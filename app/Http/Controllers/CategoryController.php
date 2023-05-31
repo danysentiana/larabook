@@ -52,7 +52,7 @@ class CategoryController extends Controller
 
     public function deleted()
     {
-        $categories = Category::onlyTrashed()->paginate(8);
+        $categories = Category::onlyTrashed()->paginate(7);
         return view('admin.category-deleted', ['categories' => $categories]);
     }
 
