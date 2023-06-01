@@ -43,7 +43,6 @@ class BookController extends Controller
 
     public function update(Request $request, $slug)
     {
-        // dd($request->all());
         $request->validate([
             'title' => 'required'
         ]);
@@ -66,5 +65,35 @@ class BookController extends Controller
         $book->category()->sync($request->category_id);
 
         return redirect()->back()->with('success', 'Book updated successfully');
+    }
+
+    public function destroy($slug)
+    {
+        $book = Book::where('slug', $slug)->first();
+        $book->delete();
+
+        return redirect()->back()->with('success', 'Book deleted successfully');
+    }
+
+    public function deleted()
+    {
+        $books = Book::onlyTrashed()->paginate(7);
+        return view('admin.book-list-deleted', ['books' => $books]);
+    }
+
+    public function restore($slug)
+    {
+        $book = Book::withTrashed()->where('slug', $slug)->first();
+        $book->restore();
+
+        return redirect()->back()->with('success', 'Book restored successfully');
+    }
+
+    public function permanentlyDelete($slug)
+    {
+        $book = Book::withTrashed()->where('slug', $slug)->first();
+        $book->forceDelete();
+
+        return redirect()->back()->with('success', 'Book permanently deleted successfully');
     }
 }
