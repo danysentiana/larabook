@@ -47,7 +47,7 @@ class CategoryController extends Controller
         $category = Category::where('slug', $slug)->first();
         $category->delete();
 
-        return redirect()->back()->with('success', 'Category deleted successfully');
+        return redirect()->back()->with('success', 'Category moved to deleted category');
     }
 
     public function deleted()

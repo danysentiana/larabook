@@ -65,8 +65,7 @@
                             </div>
                             <div class="mb-1">
                                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Book Category</label>
-                                <select name="category_id[]" id="category" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" multiple>
-                                    <option value selected disabled hidden id="selectedValue">Select Category</option>
+                                <select name="category_id[]" id="category" required class="js-example-responsive" multiple="multiple">
                                     @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                     @endforeach
@@ -125,12 +124,14 @@
                                 {{ $book->title  }}
                             </th>
                             <th scope="row" class="border-r text-center px-5 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $book->category['name']  }}
+                                @foreach ($book->category as $cat)
+                                <span class="bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">{{ $cat->name }}</span>
+                                @endforeach
                             </th>
                             <th scope="row" class=" text-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $book->status  }}
                             </th>
-                            <td class="px-3 py-2 text-center border-l">
+                            <td class="flex px-3 py-2 border-l justify-center">
                                 <!-- Modal Edit -->
                                 <button data-modal-target="editModal_{{ $book->id }}" data-modal-toggle="editModal_{{ $book->id }}" class="text-blue-500 font-medium rounded-lg text-sm px-1 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
                                     Edit
@@ -139,7 +140,7 @@
                                 <div id="editModal_{{ $book->id }}" tabindex="-1" aria-hidden="true" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                     <div class="relative w-full max-w-2xl max-h-full">
                                         <!-- Modal content -->
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <div class="bg-white rounded-lg shadow dark:bg-gray-700">
                                             <!-- Modal header -->
                                             <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
                                                 <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
@@ -151,12 +152,51 @@
                                                 </button>
                                             </div>
                                             <!-- Modal body -->
-                                            <form method="POST" action="/admin/category/{{ $book->slug }}/edit">
+                                            <form method="POST" action="/admin/book-list/{{ $book->slug }}/edit" enctype="multipart/form-data">
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="p-6 space-y-6">
-                                                    <label for="category_input" class="block mb-2 text-sm text-left font-medium text-gray-900 dark:text-white">Category Name</label>
-                                                    <input type="text" value="{{ $book->name }}" id="category_input" name="name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                                                    <div class="mb-1">
+                                                        <label for="category_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Title</label>
+                                                        <input type="text" id="category_input" name="title" value="{{ $book->title }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                                                    </div>
+                                                    <div class="mb-1">
+                                                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Book Category</label>
+                                                        <select name="category_id[]" id="category_{{ $book->id }}" required multiple>
+                                                            @foreach( $book->category as $bookCat)
+                                                            <option value="{{ $bookCat->id }}" selected>{{ $bookCat->name }}</option>
+                                                            @endforeach
+                                                            @foreach ($categories as $cat)
+                                                            <option value="{{ $cat->id }}">{{ $cat->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                               $('#category_{{ $book->id }}').select2({
+                                                                   placeholder: "Select a category",
+                                                                   allowClear: true,
+                                                                   width: '100%'
+                                                               });
+                                                            });
+                                                            </script>
+                                                        <div class="w-full bg-red-500">
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-1">
+                                                        @if ($book->cover != null)
+                                                        <label for="cover" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Cover</label>
+                                                        <img src="{{ asset('storage/images/'.$book->cover) }}" alt="{{ $book->title }}" class="w-32 h-32 object-cover rounded-lg">
+                                                        @else
+                                                        <label for="cover" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Cover</label>
+                                                        <img src="{{ asset('images/default.png') }}" alt="{{ $book->title }}" class="border w-32 h-auto object-cover rounded-lg">
+
+
+                                                        @endif
+                                                    </div>
+                                                    <div class="mb-1">
+                                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Upload file</label>
+                                                        <input name="cover" id="cover" class="block w-full text-sm text-gray-500 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" type="file">
+                                                    </div>
                                                 </div>
                                                 <!-- Modal footer -->
                                                 <div class="flex items-center p-6 space-x-2  rounded-b dark:border-gray-600 justify-end">
@@ -213,16 +253,12 @@
 
  <script>
  $(document).ready(function() {
-    $('#category').select2();
-
-    $('.select2-container').css('width', '100%');
-
-    $('#category').on('select2:open', function (e) {
-        $('.select2-search__field').val('');
+    $('#category').select2({
+        placeholder: "Select a category",
+        allowClear: true,
+        width: '100%'
     });
-
  });
-
  </script>
 @endsection
 

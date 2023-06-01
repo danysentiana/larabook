@@ -36,8 +36,35 @@ class BookController extends Controller
             'cover' => $coverName,
         ]);
 
-        $book->category()->attach($request->category);
+        $book->category()->attach($request->category_id);
 
         return redirect()->back()->with('success', 'Book added successfully');
+    }
+
+    public function update(Request $request, $slug)
+    {
+        // dd($request->all());
+        $request->validate([
+            'title' => 'required'
+        ]);
+
+        $book = Book::where('slug', $slug)->first();
+
+        if ($request->hasFile('cover')) {
+            $extension = $request->file('cover')->getClientOriginalExtension();
+            $coverName = $request->title . '_' . time() . '.' . $extension;
+            $request->file('cover')->storeAs('images', $coverName);
+        } else {
+            $coverName = $book->cover;
+        }
+
+        $book->update([
+            'title' => $request->title,
+            'cover' => $coverName,
+        ]);
+
+        $book->category()->sync($request->category_id);
+
+        return redirect()->back()->with('success', 'Book updated successfully');
     }
 }

@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function() {
     // Book Routes
     Route::get('/admin/book-list', [BookController::class, 'index'])->name('book-list')->middleware('admin');
     Route::post('/admin/book-list', [BookController::class, 'store'])->name('book-list.store')->middleware('admin');
+    Route::put('/admin/book-list/{slug}/edit', [BookController::class, 'update'])->name('book-list.update')->middleware('admin');
     Route::get('/admin/rent-log', [RentController::class, 'index'])->name('rent-log')->middleware('admin');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
