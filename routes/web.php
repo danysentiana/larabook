@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\RentController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,12 @@ Route::middleware('auth')->group(function() {
     Route::get('/admin/book-list/{slug}/restore', [BookController::class, 'restore'])->name('book-list.restore')->middleware('admin');
     Route::delete('/admin/book-list/{slug}/permanently-delete', [BookController::class, 'permanentlyDelete'])->name('book-list.permanently-delete')->middleware('admin');
     Route::get('/admin/rent-log', [RentController::class, 'index'])->name('rent-log')->middleware('admin');
+
+    // Users Routes
+    Route::get('/admin/user-list', [UserController::class, 'index'])->name('user-list')->middleware('admin');
+    Route::get('/admin/user-list/new-user', [UserController::class, 'newUser'])->name('user-list.new-user')->middleware('admin');
+
+    // logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 

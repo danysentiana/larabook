@@ -178,9 +178,7 @@
                                                                    width: '100%'
                                                                });
                                                             });
-                                                            </script>
-                                                        <div class="w-full bg-red-500">
-                                                        </div>
+                                                        </script>
                                                     </div>
                                                     <div class="mb-1">
                                                         @if ($book->cover != null)
@@ -189,8 +187,6 @@
                                                         @else
                                                         <label for="cover" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Cover</label>
                                                         <img src="{{ asset('images/default.png') }}" alt="{{ $book->title }}" class="border w-32 h-auto object-cover rounded-lg">
-
-
                                                         @endif
                                                     </div>
                                                     <div class="mb-1">
