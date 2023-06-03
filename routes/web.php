@@ -54,6 +54,7 @@ Route::middleware('auth')->group(function() {
 
     // Users Routes
     Route::get('/admin/user-list', [UserController::class, 'index'])->name('user-list')->middleware('admin');
+    Route::get('/admin/user-list/{slug}/detail', [UserController::class, 'detail'])->name('user-list.detail')->middleware('admin');
     Route::get('/admin/user-list/new-user', [UserController::class, 'newUser'])->name('user-list.new-user')->middleware('admin');
 
     // logout
