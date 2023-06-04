@@ -30,4 +30,41 @@ class UserController extends Controller
             'user' => $user
         ]);
     }
+
+    public function approve($slug)
+    {
+        $user = User::where('slug', $slug)->firstOrFail();
+        $user->status = 'active';
+        $user->save();
+        return redirect()->route('user-list')->with('success', 'User has been approved');
+    }
+
+    public function remove($slug)
+    {
+        $user = User::where('slug', $slug)->firstOrFail();
+        $user->delete();
+        return redirect()->route('user-list')->with('success', 'User has been removed');
+    }
+
+    public function deleted()
+    {
+        $users = User::onlyTrashed()->paginate(7);
+        return view('admin.user-list-deleted', [
+            'users' => $users
+        ]);
+    }
+
+    public function restore($slug)
+    {
+        $user = User::onlyTrashed()->where('slug', $slug)->firstOrFail();
+        $user->restore();
+        return redirect()->route('user-list')->with('success', 'User has been restored');
+    }
+
+    public function permanentlyDelete($slug)
+    {
+        $user = User::onlyTrashed()->where('slug', $slug)->firstOrFail();
+        $user->forceDelete();
+        return redirect()->route('user-list')->with('success', 'User has been deleted permanently');
+    }
 }

@@ -10,7 +10,7 @@
 </head>
 <body>
     @include('layouts.partials.navbar')
-    <div class="px-28 py-20">
+    <div class="p-4 lg:px-28 lg:py-20">
         @yield('content')
 
     </div>

@@ -56,6 +56,11 @@ Route::middleware('auth')->group(function() {
     Route::get('/admin/user-list', [UserController::class, 'index'])->name('user-list')->middleware('admin');
     Route::get('/admin/user-list/{slug}/detail', [UserController::class, 'detail'])->name('user-list.detail')->middleware('admin');
     Route::get('/admin/user-list/new-user', [UserController::class, 'newUser'])->name('user-list.new-user')->middleware('admin');
+    Route::get('/admin/user-list/{slug}/approve', [UserController::class, 'approve'])->name('user-list.approve')->middleware('admin');
+    Route::get('/admin/user-list/{slug}/remove', [UserController::class, 'remove'])->name('user-list.remove')->middleware('admin');
+    Route::get('/admin/user-list/deleted', [UserController::class, 'deleted'])->name('user-list.deleted')->middleware('admin');
+    Route::get('/admin/user-list/{slug}/restore', [UserController::class, 'restore'])->name('user-list.restore')->middleware('admin');
+    Route::delete('/admin/user-list/{slug}/permanently-delete', [UserController::class, 'permanentlyDelete'])->name('user-list.permanently-delete')->middleware('admin');
 
     // logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');

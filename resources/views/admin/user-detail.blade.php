@@ -3,12 +3,21 @@
 @section('title', 'User List')
 
 @section('content')
+
 <div class="p-4 sm:ml-64">
     <div class="p-4 rounded-lg dark:border-gray-700">
-       <div class="grid grid-cols-5 gap-4 mb-10">
-        <div class="flex pl-1  text-gray-700 border-none border-slate-400 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
-            <h4 class="font-bold">Detail</h4>
+        <div class="flex justify-between  text-gray-700 border-none border-slate-400 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700" aria-label="Breadcrumb">
+            {{-- <h4 class="font-bold">Detail</h4> --}}
+            <a href="/admin/user-list" class="text-white bg-gradient-to-tl from-purple-700 to-pink-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                Back to User List
+            </a>
+            @if ($user->status == 'inactive')
+            <a href="/admin/user-list/{{ $user->slug }}/approve" class="text-white bg-gradient-to-tl from-purple-700 to-pink-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
+                Approve User
+            </a>
+            @endif
         </div>
+       <div class="grid grid-cols-5 gap-4 mb-10">
        </div>
        <div class="items-center justify-center mb-4 rounded bg-gray-50 dark:bg-gray-800">
         @if (session('success'))
@@ -32,7 +41,8 @@
 
         <div class="mb-6">
         <div class="grid grid-cols-3 grid-rows-4 gap-8">
-            <div id="detail-container" class="rounded-md p-6 row-span-3 border-2 shadow">
+            <div id="detail-container" class="rounded-md px-6 pt-4 pb-6 row-span-3 border-2 shadow">
+                <h1 class="mb-4 font-bold">Detail User</h1>
                 <div class="grid grid-cols-3 gap-1">
                     <div id="text-detail" class="grid grid-rows-4 gap-3">
                         <h1>Username</h1>
@@ -50,10 +60,14 @@
             </div>
 
             <div id="table-cat" class="col-span-2 row-span-4">
+                <h1 class="mb-4 font-semibold">Borrowed Books</h1>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full border">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b ">
                             <tr class="font-extrabold text-sm">
+                                {{-- <th scope="col" class="px-6 py-4 border-r ">
+                                    No
+                                </th> --}}
                                 <th scope="col" class="px-6 py-4 border-r ">
                                     Username
                                 </th>
@@ -67,6 +81,9 @@
                         </thead>
                         <tbody>
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                {{-- <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $loop->iteration  }}
+                                </th> --}}
                                 <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                     {{ $user->username  }}
                                 </th>
@@ -81,10 +98,10 @@
                     </table>
                 </div>
             </div>
-        </div>
-        {{-- pagination --}}
-        <div class="mt-7 w-full">
-            {{-- {{ $users->links() }} --}}
+            {{-- pagination --}}
+            <div class="mt-7 w-full">
+                {{-- {{ $users->links() }} --}}
+            </div>
         </div>
 
     </div>
