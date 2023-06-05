@@ -31,6 +31,8 @@ Route::middleware(['guest'])->group(function () {
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+// search-and-filter
+// Route::get('/search-and-filter', [HomeController::class, 'searchAndFilter'])->name('search');
 
 Route::middleware('auth')->group(function() {
     Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('admin');
