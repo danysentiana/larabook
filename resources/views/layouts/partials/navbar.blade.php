@@ -1,6 +1,5 @@
-
-<nav class="bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700 py-4 border-b-2">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+<nav class="bg-white fixed w-full z-20 top-0 left-0 border-gray-200 dark:bg-gray-900 dark:border-gray-700 py-4 border-b-2">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-4">
       <a href="#" class="flex items-center">
           <img src="{{asset('img/favicon.png')}}" class="h-8"/>
           <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">arabook</span>
