@@ -36,6 +36,14 @@ class BookController extends Controller
             'cover' => $coverName,
         ]);
 
+        $book->stock = $request->stock;
+
+        if ($book->stock > 0) {
+            $book->status = 'available';
+        }
+
+        $book->save();
+
         $book->category()->attach($request->category_id);
 
         return redirect()->back()->with('success', 'Book added successfully');
@@ -43,6 +51,7 @@ class BookController extends Controller
 
     public function update(Request $request, $slug)
     {
+        // update stock
         $request->validate([
             'title' => 'required'
         ]);
@@ -63,6 +72,16 @@ class BookController extends Controller
         ]);
 
         $book->category()->sync($request->category_id);
+
+        $book->stock = $request->stock;
+
+        if ($book->stock > 0) {
+            $book->status = 'available';
+        } else {
+            $book->status = 'unavailable';
+        }
+
+        $book->save();
 
         return redirect()->back()->with('success', 'Book updated successfully');
     }

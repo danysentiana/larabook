@@ -11,21 +11,16 @@ class HomeController extends Controller
     public function index(Request $request){
         $category = Category::all();
 
-        if($request->has('search')){
-            $books = Book::where('title', 'LIKE', '%' . $request->search . '%')->paginate(5);
-        }else{
-            $books = Book::paginate(8);
-        }
-
-        if($request->has('category')){
-            // dd($request->all());
-            // multi category filter
-            $books = Book::whereHas('category', function($query) use($request){
+        if($request->has('search') && $request->has('category')){
+            $books = Book::where('title', 'LIKE', '%' . $request->search . '%')->whereHas('category', function($query) use($request){
                 $query->whereIn('categories.id', $request->category);
-            })->paginate(8);
+            })->orderBy('title', 'asc')->paginate(8);
 
             $checked_category = $request->category;
+        }else{
+            $books = Book::orderBy('title', 'asc')->paginate(8);
         }
+
         return view('home', [
             'books' => $books,
             'categories' => $category,

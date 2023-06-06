@@ -11,10 +11,8 @@
 </head>
 <body>
     @include('layouts.partials.navbar')
-    <div class="p-4 lg:px-28 lg:py-20">
+    <div class="p-4 lg:px-28 lg:py-16">
         @yield('content')
-
     </div>
-
 </body>
 </html>

@@ -59,9 +59,15 @@
                     <form action="/admin/book-list" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="p-6 space-y-6">
-                            <div class="mb-1">
-                                <label for="category_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Title</label>
-                                <input type="text" id="category_input" name="title" value="{{ old('title') }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                            <div class="grid grid-cols-4 mb-1 gap-2">
+                                <div class="col-span-3">
+                                    <label for="title_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Title</label>
+                                    <input type="text" id="title_input" name="title" value="{{ old('title') }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                                </div>
+                                <div id="stock">
+                                    <label for="stock_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock</label>
+                                    <input type="number" id="stock_input" name="stock" value="0" min="0" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                                </div>
                             </div>
                             <div class="mb-1">
                                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Book Category</label>
@@ -70,8 +76,6 @@
                                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                     @endforeach
                                 </select>
-                                <div class="w-full bg-red-500">
-                                </div>
                             </div>
                             <div class="mb-1">
                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="user_avatar">Upload file</label>
@@ -80,7 +84,7 @@
                         </div>
                         <!-- Modal footer -->
                         <div class="flex items-center p-6 space-x-2  rounded-b dark:border-gray-600 justify-end">
-                            <button data-modal-hide="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                            <button data-modal-hide="defaultModal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Back</button>
                             <button data-modal-hide="defaultModal" type="submit" class="text-white bg-gradient-to-tl from-purple-700 to-pink-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add Book</button>
                         </div>
                     </form>
@@ -106,6 +110,9 @@
                             <th scope="col" class="px-5 py-4 border-r text-center">
                                 Category
                             </th>
+                            <th scope="col" class="px-5 py-4 border-r text-center">
+                                Stock
+                            </th>
                             <th scope="col" class="px-4 py-4 text-center">
                                 Status
                             </th>
@@ -127,6 +134,9 @@
                                 @foreach ($book->category as $cat)
                                 <span class="bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300">{{ $cat->name }}</span>
                                 @endforeach
+                            </th>
+                            <th scope="row" class="border-r text-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $book->stock  }}
                             </th>
                             <th scope="row" class=" text-center px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $book->status  }}
@@ -156,9 +166,15 @@
                                                 @csrf
                                                 @method('PUT')
                                                 <div class="p-6 space-y-6">
-                                                    <div class="mb-1">
-                                                        <label for="category_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Title</label>
-                                                        <input type="text" id="category_input" name="title" value="{{ $book->title }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                                                    <div class="grid grid-cols-4 mb-1 gap-2">
+                                                        <div class="col-span-3">
+                                                            <label for="title_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Book Title</label>
+                                                            <input type="text" id="title_input" name="title" value="{{ $book->title }}" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+                                                        </div>
+                                                        <div id="stock">
+                                                            <label for="stock_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Stock</label>
+                                                            <input type="number" id="stock_input" name="stock" value="{{ $book->stock }}"  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                                                        </div>
                                                     </div>
                                                     <div class="mb-1">
                                                         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Book Category</label>
@@ -181,7 +197,7 @@
                                                         </script>
                                                     </div>
                                                     <div class="mb-1">
-                                                        @if ($book->cover != null)
+                                                        @if ($book->cover != 'default.png')
                                                         <label for="cover" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Cover</label>
                                                         <img src="{{ asset('storage/images/'.$book->cover) }}" alt="{{ $book->title }}" class="w-32 h-32 object-cover rounded-lg">
                                                         @else

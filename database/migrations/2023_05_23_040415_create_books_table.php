@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->string('slug')->nullable();
             $table->string('cover')->nullable();
-            $table->enum('status', ['available', 'unavailable'])->default('available');
+            $table->integer('stock')->default(0);
+            $table->enum('status', ['available', 'unavailable'])->default('unavailable');
             $table->timestamps();
         });
     }
