@@ -3,8 +3,8 @@
 @section('title', 'Book List')
 
 @section('content')
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> --}}
 <div class="p-4 sm:ml-64">
     <div class="p-4 rounded-lg dark:border-gray-700">
        <div class="grid grid-cols-5 gap-4 mb-10">
@@ -71,7 +71,7 @@
                             </div>
                             <div class="mb-1">
                                 <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Book Category</label>
-                                <select name="category_id[]" id="category" required class="js-example-responsive" multiple="multiple">
+                                <select name="category_id[]" id="category" required multiple style="padding: 10px; border-radius: 8px">
                                     @foreach ($categories as $cat)
                                     <option value="{{ $cat->id }}">{{ $cat->name }}</option>
                                     @endforeach
@@ -178,7 +178,7 @@
                                                     </div>
                                                     <div class="mb-1">
                                                         <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Book Category</label>
-                                                        <select name="category_id[]" id="category_{{ $book->id }}" required multiple>
+                                                        <select name="category_id[]" id="category_{{ $book->id }}" required multiple style="padding: 10px; border-radius:8px">
                                                             @foreach( $book->category as $bookCat)
                                                             <option value="{{ $bookCat->id }}" selected>{{ $bookCat->name }}</option>
                                                             @endforeach
@@ -187,22 +187,21 @@
                                                             @endforeach
                                                         </select>
                                                         <script>
-                                                            $(document).ready(function() {
-                                                               $('#category_{{ $book->id }}').select2({
-                                                                   placeholder: "Select a category",
-                                                                   allowClear: true,
-                                                                   width: '100%'
-                                                               });
-                                                            });
+                                                            new SlimSelect({
+                                                                select: '#category_{{ $book->id }}',
+                                                                settings: {
+                                                                    placeholderText: 'Select Category',
+                                                                }
+                                                            })
                                                         </script>
                                                     </div>
                                                     <div class="mb-1">
                                                         @if ($book->cover != 'default.png')
                                                         <label for="cover" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Current Cover</label>
-                                                        <img src="{{ asset('storage/images/'.$book->cover) }}" alt="{{ $book->title }}" class="w-32 h-32 object-cover rounded-lg">
+                                                        <img src="{{ asset('storage/images/'.$book->cover) }}" alt="{{ $book->title }}" class="w-32 h-full object-cover rounded-lg">
                                                         @else
                                                         <label for="cover" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Cover</label>
-                                                        <img src="{{ asset('images/default.png') }}" alt="{{ $book->title }}" class="border w-32 h-auto object-cover rounded-lg">
+                                                        <img src="{{ asset('images/default.png') }}" alt="{{ $book->title }}" class="border w-32 h-full object-cover rounded-lg">
                                                         @endif
                                                     </div>
                                                     <div class="mb-1">
@@ -264,13 +263,12 @@
  </div>
 
  <script>
- $(document).ready(function() {
-    $('#category').select2({
-        placeholder: "Select a category",
-        allowClear: true,
-        width: '100%'
-    });
- });
+    new SlimSelect({
+        select: '#category',
+        settings: {
+            placeholderText: 'Select Category',
+        }
+    })
  </script>
 @endsection
 
