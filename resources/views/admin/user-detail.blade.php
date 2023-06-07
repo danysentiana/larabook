@@ -64,36 +64,62 @@
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg w-full border">
                     <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                         <thead class="text-gray-700 bg-gray-50 dark:bg-gray-700 dark:text-gray-400 border-b ">
-                            <tr class="font-extrabold text-sm">
-                                {{-- <th scope="col" class="px-6 py-4 border-r ">
-                                    No
-                                </th> --}}
-                                <th scope="col" class="px-6 py-4 border-r ">
-                                    Username
+                            <tr class="font-extrabold text-sm text-center">
+                                <th scope="col" class="px-2 py-4 border-r">
+                                    No.
                                 </th>
-                                <th scope="col" class="px-3 py-4 border-r text-center">
-                                    Phone Number
+                                <th scope="col" class="px-5 py-4 border-l">
+                                    Book
                                 </th>
-                                <th scope="col" class="px-5 py-4 text-center border-l">
-                                    Action
+                                <th scope="col" class="px-5 py-4 border-l">
+                                    Rent Date
+                                </th>
+                                <th scope="col" class="px-5 py-4 border-l">
+                                    Max Return Date
+                                </th>
+                                <th scope="col" class="px-5 py-4 border-l">
+                                    Return Date
+                                </th>
+                                <th scope="col" class="px-5 py-4 border-l">
+                                    Status
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                {{-- <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $loop->iteration  }}
-                                </th> --}}
-                                <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $user->username  }}
-                                </th>
-                                <th scope="row" class="text-center px-3 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    {{ $user->phone  }}
-                                </th>
-                                <td class="px-5 py-2 text-center border-l">
-                                    <a href="/admin/user-detail/{{ $user->slug }}/detail" class="underline text-blue-600 font-semibold">Detail</a>
+                            @foreach ($rents as $rent)
+                            <tr class="text-center bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td class="p-1 border-r">
+                                    {{-- {{  $rents->firstItem() + $loop->index }}. --}}
+                                    {{ $loop->iteration }}
                                 </td>
+                                <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $rent->book['title']  }}
+                                </th>
+                                <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $rent->rent_date  }}
+                                </th>
+                                <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{ $rent->max_return_date  }}
+                                </th>
+                                <th scope="row" class="border-r px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    @if ($rent->return_date == null)
+                                        Null
+                                    @else
+                                        {{ $rent->return_date  }}
+                                    @endif
+                                    {{-- {{ $rent->return_date  }} --}}
+                                </th>
+                                <th scope="row" class="px-6 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    @if ($rent->return_date == null)
+                                        <p class="text-yellow-300">Rent</p>
+                                    @elseif($curr_date > $rent->max_return_date)
+                                        <p class="text-red-500">Overdue</p>
+                                    @else
+                                        <p class="text-green-300">Returned</p>
+                                    @endif
+                                </th>
                             </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

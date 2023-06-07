@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookRent;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -26,8 +27,10 @@ class UserController extends Controller
     public function detail($slug)
     {
         $user = User::where('slug', $slug)->firstOrFail();
+        $rents = BookRent::where('user_id', $user->id)->get();
         return view('admin.user-detail', [
-            'user' => $user
+            'user' => $user,
+            'rents' => $rents
         ]);
     }
 

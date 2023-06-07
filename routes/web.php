@@ -67,6 +67,8 @@ Route::middleware('auth')->group(function() {
     // Rent Book Routes
     Route::get('/admin/rent-log', [RentController::class, 'index'])->name('rent-log')->middleware('admin');
     Route::post('/admin/rent-log', [RentController::class, 'store'])->name('rent-log.store')->middleware('admin');
+    Route::post('/admin/return-book', [RentController::class, 'returnBook'])->name('return-book')->middleware('admin');
+    Route::get('/admin/rent-log/detail', [RentController::class, 'getRent'])->name('get-rent')->middleware('admin');
     // logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
